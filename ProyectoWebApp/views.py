@@ -3,21 +3,21 @@ from django.shortcuts import render, HttpResponse
 
 # Create your views here.
 
-def home(rquest):
-    return HttpResponse("Inicio")
+def home(request):
+    return render(request,"home.html")
 
 
-def servicios(rquest):
-    return HttpResponse("Servicios")
+def servicios(request):
+    return render(request,"servicios.html")
 
 
-def tienda(rquest):
-    return HttpResponse("Tienda")
+def tienda(request):
+    return render(request,"tienda.html")
 
 
-def blog(rquest):
-    return HttpResponse("Blog")
+def blog(request):
+    return render(request,"blog.html")
 
 
-def contacto(rquest):
-    return HttpResponse("Contacto")
+def contacto(request):
+    return render(request,"contacto.html")
