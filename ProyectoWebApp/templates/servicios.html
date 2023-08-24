@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Servicios</title>
+</head>
+
     {% extends "base.html" %}
 
     {% load static %}
 
     {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <title>Servicios</title>
-</head>
-<body>
-    <p>servicios</p>
-</body>
-{% endblock %}
+
+        {% for servicio in servicios %}
+    <div><p>
+
+        <h2 style="color:white">{{servicio.titulo}}</h2>
+
+        <p style="color:white">{{servicio.contenido}}</p>
+
+        <p><img src = "{{servicio.imagen.url}}"></p>
+
+    </p></div>
+
+        {% endfor %}
+    {% endblock %}
+
+
 </html>
