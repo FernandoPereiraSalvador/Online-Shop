@@ -288,3 +288,13 @@ ul.errorlist{
     text-decoration: none;
 
 }
+
+.contenedorFormulario{
+    background-color: rgba(24,64,8);
+    width: 50%;
+    margin: 10px auto;
+
+    border-radius: 5px;
+
+    padding: 1px 0px;
+}
