@@ -10,6 +10,11 @@
 </head>
 <body>
     <div class="container">
+
+        <div style="float:right;">
+            <p style="color: white">Carro de compra</p>
+        </div>
+
         <div class="row">
             {% for producto in productos %}
                 <div class="col-md-3">
@@ -18,6 +23,9 @@
                         <div class="card-body" style="text-align: center;">
                             <h7 class="card-title">{{ producto.nombre }}</h7>
                             <p class="card-text">{{ producto.precio }} €</p>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="#" class="btn btn-success">Agregar</a>
                         </div>
                     </div>
                 </div>
