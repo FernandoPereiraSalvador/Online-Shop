@@ -3,6 +3,8 @@
 
     {% load static %}
 
+    {% load crispy_forms_tags %}
+
     {% block content %}
 <head>
     <meta charset="UTF-8">
@@ -11,9 +13,12 @@
 <body>
     <form method="post" action="" style="color:white">
         {% csrf_token %}
-        {{form}}
 
-        <button type="submit" class="btn btn-success">Registrate</button>
+        <div style="width: 75%; margin: auto;">
+            {{form|crispy}}
+
+            <button type="submit" class="btn btn-success">Registrate</button>
+        </div>
 
     </form>
 </body>
