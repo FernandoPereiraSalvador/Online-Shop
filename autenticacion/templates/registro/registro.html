@@ -9,7 +9,13 @@
     <title>Autenticacion</title>
 </head>
 <body>
+    <form method="post" action="" style="color:white">
+        {% csrf_token %}
+        {{form}}
 
+        <button type="submit" class="btn btn-success">Registrate</button>
+
+    </form>
 </body>
     {% endblock %}
 </html>
