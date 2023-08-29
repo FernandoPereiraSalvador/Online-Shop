@@ -26,6 +26,11 @@
                     <tr class="text-center">
                         <td>{{value.nombre}}</td>
                         <td>{{value.cantidad}}</td>
+                        <td>
+                            <a href="{% url 'carro:agregar' value.producto_id %}" class="btn btn-sm btn-success">+</a>
+                            <a href="{% url 'carro:restar' value.producto_id %}" class="btn btn-sm btn-success">-</a><br/>
+                            {{value.precio}} €
+                        </td>
                     </tr>
                 {% endfor %}
             {% else %}
@@ -38,6 +43,14 @@
                 </tr>
             {% endif %}
         </tbody>
+
+        <tfoot>
+            <tr>
+                <td colspan="3">
+                    Total: {{importe_total_carro}} €
+                </td>
+            </tr>
+        </tfoot>
 
     </table>
 </body>
