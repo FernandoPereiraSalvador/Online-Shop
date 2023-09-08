@@ -16,12 +16,16 @@ class Categoria(models.Model):
 
 class Post(models.Model):
     titulo = models.CharField(max_length=50)
-    contenido = models.CharField(max_length=50)
-    imagen = models.ImageField(upload_to='blog',null=True,blank=True)
+    contenido = models.CharField(max_length=500)
+    introduccion = models.CharField(max_length=50)
+    imagen_principal = models.ImageField(upload_to='blog',null=True,blank=True)
     autor=models.ForeignKey(User,on_delete=models.CASCADE)
     categorias = models.ManyToManyField(Categoria)
     created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    video_url = models.URLField(blank=True)
+    imagenes = models.ManyToManyField('Imagen', blank=True)
 
     class Meta:
         verbose_name='post'
@@ -29,3 +33,8 @@ class Post(models.Model):
 
     def __str__(self):
         return self.titulo
+
+class Imagen(models.Model):
+    imagen = models.ImageField(upload_to='blog/imagenes/')
+    titulo = models.CharField(max_length=100)
+    descripcion = models.TextField(blank=True)
