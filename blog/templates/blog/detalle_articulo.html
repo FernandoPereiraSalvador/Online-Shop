@@ -1,23 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-
-    {% extends "base.html" %}
-
+{% extends "base.html" %}
     {% load static %}
 
     {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="frame-src 'self' https://www.youtube.com;">
+    <title>{{ post.titulo }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            color: white; /* Cambiamos el color del título a blanco */
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .author {
+            font-style: italic;
+            color: white; /* Cambiamos el color del autor a blanco */
+        }
+        .date {
+            font-size: 12px;
+            color: white;
+        }
+        /* Centrar contenido */
+        .content-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: white; /* Cambiamos el color del texto del contenido a blanco */
+        }
+    </style>
+</head>
+
+
 
 
 <body>
-    <span class="section-heading-lower">{{post.titulo}}</span>
-    <span class="section-heading-upper">{{post.contenido}}</span>
-    <p>Hola como estas</p>
+    <div class="content-container">
+        <h1>{{ post.titulo }}</h1>
+        <img src="{{ post.imagen_principal.url }}" alt="Imagen Principal">
+        <p class="author">Autor: {{ post.autor.username }}</p>
+        <p class="date">{{ post.created }}</p>
+        <p>{{ post.introduccion }}</p>
+
+        {% if post.video_url %}
+            <iframe width="930" height="523" src="{{ post.video_url }}" title="¿Es realmente difícil la informática?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        {% endif %}
+
+        <p>{{ post.contenido }}</p>
+
+        {% if post.imagenes.all %}
+            <h2>Imágenes Relacionadas</h2>
+            <ul>
+                {% for imagen in post.imagenes.all %}
+                    <img src="{{ imagen.imagen.url }}" alt="{{ imagen.titulo }}">
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
 </body>
-
-    {% endblock %}
-
+{% endblock %}
 </html>
