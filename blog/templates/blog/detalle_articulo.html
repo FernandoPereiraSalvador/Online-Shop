@@ -68,6 +68,30 @@
             </ul>
         {% endif %}
     </div>
+
+            <h2>Comentarios:</h2>
+            <ul>
+                {% for comentario in comentarios %}
+                    <li>
+                        <strong>{{ comentario.autor.username }}</strong> dijo el {{ comentario.fecha|date:"F d, Y H:i" }}:
+                        <p>{{ comentario.texto }}</p>
+                    </li>
+                {% empty %}
+                    <li>No hay comentarios todavía.</li>
+                {% endfor %}
+            </ul>
+    
+            <h2>Deja un comentario:</h2>
+            {% if request.user.is_authenticated %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ formulario.as_p }}
+                    <button type="submit">Enviar comentario</button>
+                </form>
+            {% else %}
+                <p>Necesitas iniciar sesión para dejar un comentario.</p>
+            {% endif %}
+
 </body>
 {% endblock %}
 </html>
