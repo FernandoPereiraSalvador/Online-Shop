@@ -26,7 +26,7 @@
 
     <div style="color: white; text-align: right; margin-right: 100px">
         {% if user.is_authenticated %}
-            Hola {{user.username}} &nbsp;&nbsp;<a href="{% url 'cerrar_sesion' %}" style="color: white;">Cerrar sesión</a>
+            <a href="{% url 'panel_usuario' %}">Hola {{ user.username }}</a> &nbsp;&nbsp;<a href="{% url 'cerrar_sesion' %}" style="color: white;">Cerrar sesión</a>
         {% else %}
             <a href = "{% url 'logear' %}" style="color: white;">Iniciar sesion</a> &nbsp;&nbsp;<a href = "{% url 'Autenticacion' %}" style="color: white;">Registrarse</a>
         {% endif %}

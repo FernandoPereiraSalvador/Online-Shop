@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% extends "base.html" %}
+    {% load static %}
+    {% block content %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Usuario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        .user-info {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .user-info p {
+            margin: 0;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-around;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+</head>
+<body>
+    <h1 style="color: white;">Panel de Usuario</h1>
+
+    <div class="user-info">
+        <h2>{{ usuario.username }}</h2>
+        <p>Correo Electrónico: {{ usuario.email }}</p>
+        <!-- Agrega más información del usuario si lo deseas -->
+    </div>
+
+    <div class="btn-container">
+        <a href="#" class="btn ver-comentarios-btn">Ver Comentarios</a>
+        <a href="#" class="btn">Gestionar Compras</a>
+        <a href="#" class="btn">Hablar con Otros Usuarios</a>
+    </div>
+
+    <div id="comentarios" style="display: none;">
+        <table style="margin: 0 auto;">
+            <tr>
+                <td><h2>Tus Comentarios:</h2></td>
+            </tr>
+            {% for comentario in comentarios %}
+                    <tr>
+                        <td>Blog: {{ comentario.publicacion.titulo }}</td>
+                    </tr>
+                    <tr>
+                        <td>Comentario: {{ comentario.texto }}</td>
+                        <td>
+                            <form action="{% url 'eliminar_comentario' comentario.id %}" method="post" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este comentario?')">
+                                {% csrf_token %}
+                                <input type="submit" value="Eliminar" class="btn">
+                            </form>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Fecha: {{ comentario.fecha }}</td>
+                    </tr>
+            {% empty %}
+                <tr>
+                    <td>No has hecho ningún comentario</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <script>
+        // Función para mostrar u ocultar la sección de comentarios
+        function toggleComentarios() {
+            var comentariosDiv = document.getElementById('comentarios');
+            if (comentariosDiv.style.display === 'none') {
+                comentariosDiv.style.display = 'block';
+            } else {
+                comentariosDiv.style.display = 'none';
+            }
+        }
+
+        // Agrega un evento de clic al botón "Ver Comentarios"
+        var verComentariosBtn = document.querySelector('.ver-comentarios-btn');
+        verComentariosBtn.addEventListener('click', toggleComentarios);
+    </script>
+</body>
+{% endblock %}
+</html>
