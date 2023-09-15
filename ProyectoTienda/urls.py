@@ -26,5 +26,6 @@ urlpatterns = [
     path('tienda/',include('tienda.urls')),
     path('carro/',include('carro.urls')),
     path('pedidos/',include('pedidos.urls')),
+    path('panel_usuario/',include('panel_usuario.urls')),
     path('', include('ProyectoWebApp.urls')),
 ]
