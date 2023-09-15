@@ -57,7 +57,7 @@
 
     <div class="btn-container">
         <a href="#" class="btn ver-comentarios-btn">Ver Comentarios</a>
-        <a href="#" class="btn">Gestionar Compras</a>
+        <a href="#" class="btn gestionar-compras-btn">Gestionar Compras</a>
         <a href="#" class="btn">Hablar con Otros Usuarios</a>
     </div>
 
@@ -91,6 +91,48 @@
         </table>
     </div>
 
+    <div id="pedidos" style="display: none;">
+        <table style="margin: 0 auto;">
+            <tr>
+                <td><h2>Tus Pedidos:</h2></td>
+            </tr>
+            {% for pedido, total in pedidos_info %}
+                <tr>
+                    <td>Pedido ID: {{ pedido.id }}</td>
+                </tr>
+                <tr>
+                    <td>Fecha: {{ pedido.created_at }}</td>
+                </tr>
+                <tr>
+                    <td>Estado: {{ pedido.estado }}</td>
+                </tr>
+                <tr>
+                    <td>Productos:</td>
+                </tr>
+                <tr>
+                    <td>
+                        <ul>
+                            {% for linea_pedido in pedido.lineapedido_set.all %}
+                                <li>{{ linea_pedido.cantidad }} unidades de {{ linea_pedido.producto.nombre }})</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        El total es: {{ total }}
+                    </td>
+
+                </tr>
+            {% empty %}
+                <tr>
+                    <td>No has realizado ningún pedido</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
     <script>
         // Función para mostrar u ocultar la sección de comentarios
         function toggleComentarios() {
@@ -106,6 +148,24 @@
         var verComentariosBtn = document.querySelector('.ver-comentarios-btn');
         verComentariosBtn.addEventListener('click', toggleComentarios);
     </script>
+
+    <script>
+        // Función para mostrar u ocultar la sección de pedidos
+        function togglePedidos() {
+            var pedidosDiv = document.getElementById('pedidos');
+            if (pedidosDiv.style.display === 'none') {
+                pedidosDiv.style.display = 'block';
+            } else {
+                pedidosDiv.style.display = 'none';
+            }
+        }
+
+        // Agrega un evento de clic al botón "Gestionar Compras"
+        var gestionarComprasBtn = document.querySelector('.gestionar-compras-btn');
+        gestionarComprasBtn.addEventListener('click', togglePedidos);
+    </script>
+
+
 </body>
 {% endblock %}
 </html>
