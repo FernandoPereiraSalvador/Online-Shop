@@ -6,6 +6,8 @@ from blog.models import Comentario
 from pedidos.models import Pedido, LineaPedido
 
 
+# Función auxiliar para renderizar la página común
+
 @login_required
 def panel_usuario(request):
     # Obtener información del usuario autenticado
@@ -38,7 +40,7 @@ def eliminar_comentario(request, comentario_id):
     comentario = get_object_or_404(Comentario, id=comentario_id)
     if request.method == 'POST':
         comentario.delete()
-    return render(request, 'panel usuario/panel_usuario.html', {'usuario': usuario, 'comentarios': comentarios})
+    return panel_usuario(request)
 
 
 def anular_pedido(request, pedido_id):
@@ -49,4 +51,4 @@ def anular_pedido(request, pedido_id):
     pedido = get_object_or_404(Pedido, id=pedido_id)
     if request.method == 'POST':
         pedido.delete()
-    return render(request, 'panel usuario/panel_usuario.html', {'usuario': usuario, 'comentarios': comentarios})
+    return panel_usuario(request)
