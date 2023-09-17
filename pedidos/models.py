@@ -10,6 +10,18 @@ User = get_user_model()
 
 
 class Pedido(models.Model):
+
+    ESTADOS = (
+        ('pendiente', 'Pendiente'),
+        ('preparado', 'Preparado'),
+        ('enviado', 'Enviado'),
+        ('entregado', 'Entregado'),
+        ('cancelado', 'Cancelado'),
+        ('devuelto', 'Devuelto'),
+    )
+
+    estado = models.CharField(max_length=20, choices=ESTADOS, default=ESTADOS[0][0])
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -30,18 +42,6 @@ class Pedido(models.Model):
 
 
 class LineaPedido(models.Model):
-
-    ESTADOS = (
-        ('pendiente', 'Pendiente'),
-        ('preparado', 'Preparado'),
-        ('enviado', 'Enviado'),
-        ('recogido', 'Recogido'),
-        ('entregado', 'Entregado'),
-        ('cancelado', 'Cancelado'),
-        ('devuelto', 'Devuelto'),
-    )
-
-    estado = models.CharField(max_length=20, choices=ESTADOS, default=ESTADOS[0][0])
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)

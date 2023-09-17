@@ -96,12 +96,25 @@
             <tr>
                 <td><h2>Tus Pedidos:</h2></td>
             </tr>
-            {% for pedido, total in pedidos_info %}
+            {% for pedido, total, linea_pedidos in pedidos_info %}
                 <tr>
                     <td>Pedido ID: {{ pedido.id }}</td>
                 </tr>
                 <tr>
                     <td>Fecha: {{ pedido.created_at }}</td>
+                </tr>
+                <tr>
+                    <td>El total es: {{ total|floatformat:"2" }}</td>
+                    <td>
+                        {% if pedido.estado == 'pendiente' %}
+                            <form action="{% url 'anular_pedido' pedido.id %}" method="post" onsubmit="return confirm('¿Estás seguro de que quieres anular el pedido?')">
+                                {% csrf_token %}
+                                <input type="submit" value="Anular" class="btn">
+                            </form>
+                        {% elif pedido.estado == 'entregado' %}
+                            <input type="submit" value="Devolver" class="btn">
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <td>Estado: {{ pedido.estado }}</td>
@@ -111,19 +124,18 @@
                 </tr>
                 <tr>
                     <td>
-                        <ul>
-                            {% for linea_pedido in pedido.lineapedido_set.all %}
-                                <li>{{ linea_pedido.cantidad }} unidades de {{ linea_pedido.producto.nombre }})</li>
-                            {% endfor %}
-                        </ul>
+                        {% for linea_pedido in pedido.lineapedido_set.all %}
+                            <p>{{ linea_pedido.cantidad }} unidades de {{ linea_pedido.producto.nombre }}</p>
+                        {% endfor %}
                     </td>
                 </tr>
+
                 <tr>
                     <td>
-                        El total es: {{ total }}
+                        <br>
                     </td>
-
                 </tr>
+
             {% empty %}
                 <tr>
                     <td>No has realizado ningún pedido</td>
@@ -134,34 +146,47 @@
 
 
     <script>
+        var comentariosDiv = document.getElementById('comentarios');
+        var pedidosDiv = document.getElementById('pedidos');
+        var verComentariosBtn = document.querySelector('.ver-comentarios-btn');
+        var gestionarComprasBtn = document.querySelector('.gestionar-compras-btn');
+        var comentariosVisible = false; // Estado inicial
+        var pedidosVisible = false; // Estado inicial
+
         // Función para mostrar u ocultar la sección de comentarios
         function toggleComentarios() {
-            var comentariosDiv = document.getElementById('comentarios');
-            if (comentariosDiv.style.display === 'none') {
-                comentariosDiv.style.display = 'block';
-            } else {
+            if (comentariosVisible) {
                 comentariosDiv.style.display = 'none';
+                comentariosVisible = false;
+            } else {
+                comentariosDiv.style.display = 'block';
+                comentariosVisible = true;
+                // Ocultar la otra sección si está visible
+                if (pedidosVisible) {
+                    pedidosDiv.style.display = 'none';
+                    pedidosVisible = false;
+                }
             }
         }
 
-        // Agrega un evento de clic al botón "Ver Comentarios"
-        var verComentariosBtn = document.querySelector('.ver-comentarios-btn');
-        verComentariosBtn.addEventListener('click', toggleComentarios);
-    </script>
-
-    <script>
         // Función para mostrar u ocultar la sección de pedidos
         function togglePedidos() {
-            var pedidosDiv = document.getElementById('pedidos');
-            if (pedidosDiv.style.display === 'none') {
-                pedidosDiv.style.display = 'block';
-            } else {
+            if (pedidosVisible) {
                 pedidosDiv.style.display = 'none';
+                pedidosVisible = false;
+            } else {
+                pedidosDiv.style.display = 'block';
+                pedidosVisible = true;
+                // Ocultar la otra sección si está visible
+                if (comentariosVisible) {
+                    comentariosDiv.style.display = 'none';
+                    comentariosVisible = false;
+                }
             }
         }
 
-        // Agrega un evento de clic al botón "Gestionar Compras"
-        var gestionarComprasBtn = document.querySelector('.gestionar-compras-btn');
+        // Agrega eventos de clic a los botones correspondientes
+        verComentariosBtn.addEventListener('click', toggleComentarios);
         gestionarComprasBtn.addEventListener('click', togglePedidos);
     </script>
 
