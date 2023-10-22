@@ -34,8 +34,6 @@ def panel_usuario(request):
 
 
 def eliminar_comentario(request, comentario_id):
-    usuario = request.user
-    comentarios = Comentario.objects.filter(autor=usuario)
 
     comentario = get_object_or_404(Comentario, id=comentario_id)
     if request.method == 'POST':
@@ -44,9 +42,6 @@ def eliminar_comentario(request, comentario_id):
 
 
 def anular_pedido(request, pedido_id):
-    usuario = request.user
-    pedidos = Pedido.objects.filter(user=usuario)
-    comentarios = Comentario.objects.filter(autor=usuario)
 
     pedido = get_object_or_404(Pedido, id=pedido_id)
     if request.method == 'POST':
