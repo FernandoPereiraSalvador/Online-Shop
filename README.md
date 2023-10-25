@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Hiragana y Katakana Quiz</h1>
+  <h1>Online Shop</h1>
    <img src="https://imgur.com/wCiqpsY.png" alt="Texto alternativo" width="500" height="300">
 </div>
 
